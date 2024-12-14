@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="org.lycoding.fastchat.mapper.ChatSessionUserMapper">
+    <!--连接查询，所有的会话消息-->
+    <select id="chatSessionUserList" resultType="org.lycoding.fastchat.entity.pojo.ChatSessionUser">
+        select
+            csu.*,
+            cs.last_receive_message,
+            cs.last_receive_time,
+            case when substring(contacts_id,1,1)='G'
+                     then (select count(*) from user_contacts uc where uc.contacts_id = csu.contacts_id)
+                 else 0
+                end account
+        from chat_session_user csu inner join chat_session cs
+                                              on csu.session_id=cs.session_id
+        where csu.user_id=#{userId}
+    </select>
+</mapper>

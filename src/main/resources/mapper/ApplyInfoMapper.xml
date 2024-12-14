@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="org.lycoding.fastchat.mapper.ApplyInfoMapper">
+<!--    <insert id="createApply" parameterType="org.lycoding.fastchat.entity.pojo.ApplyInfo">-->
+<!--        insert into user_apply-->
+<!--        <set>-->
+<!--            apply_user_id=#{applyUserId},-->
+<!--            apply_type=#{applyType},-->
+<!--            join_id=#{joinId},-->
+<!--            <if test="apply_info != null">-->
+<!--                apply_info=#{applyInfo}-->
+<!--            </if>-->
+<!--        </set>-->
+<!--    </insert>-->
+<!--查询未读的申请信息条数-->
+    <select id="queryApplyCount" resultType="java.lang.Integer" parameterType="org.lycoding.fastchat.entity.pojo.ApplyInfo">
+        select count(1) as applyCount from user_apply where join_id=#{joinId} and apply_time>#{lastReceiveTime}
+    </select>
+</mapper>

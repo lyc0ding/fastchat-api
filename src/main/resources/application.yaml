@@ -1,0 +1,55 @@
+#服务配置信息
+server:
+  port: 9999
+#  servlet:
+#    context-path: /api
+#  reactive:
+#    session:
+#      timeout: PT60M  #session过期时间
+#数据库连接信息
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/fast_chat?useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      pool-name: HikariCPDatasource
+      minimum-idle: 5
+      idle-timeout: 180000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 180000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  data:
+    redis:
+      host: 192.168.10.101
+      port: 6379
+      lettuce:
+        pool:
+          min-idle: 0
+          max-idle: 10
+          max-active: 20
+        database: 0   # 设置redis存储的数据库名称
+  main:
+    allow-circular-references: true
+  reactor:
+    netty:
+      shutdown-quiet-period:
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+
+#  netty的启动端口
+netty:
+  port: 5051
+
+
+
+
+
+

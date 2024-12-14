@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="org.lycoding.fastchat.mapper.UserInfoMapper">
+
+    <!--    根据phone或者email查询是否存在某个用户-->
+    <select id="queryUserByPhoneOrEmail" resultType="org.lycoding.fastchat.entity.pojo.UserInfo" parameterType="org.lycoding.fastchat.entity.pojo.UserInfo">
+        select phone,email,password from user_info
+        <where>
+            <if test="phone != null">
+                phone=#{phone}
+            </if>
+            <if test="email != null">
+                or email=#{email}
+            </if>
+        </where>
+    </select>
+
+    <!--    根据userId、phone或者email查询是否存在某个用户-->
+    <select id="login" resultType="string" parameterType="org.lycoding.fastchat.entity.pojo.UserInfo">
+        select password from user_info
+        <where>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+            <if test="phone != null">
+                or phone = #{phone}
+            </if>
+            <if test="email != null">
+                or email = #{email}
+            </if>
+        </where>
+    </select>
+
+<!--    根据用户id修改用户信息-->
+    <update id="updateUserInfo" parameterType="org.lycoding.fastchat.entity.pojo.UserInfo">
+        update user_info
+            <set>
+                <if test="sex != null">
+                    sex=#{sex},
+                </if>
+                <if test="nickname != null">
+                    nickname=#{nickname},
+                </if>
+                <if test="avator != null">
+                    avator=#{avator},
+                </if>
+                <if test="birthday != null">
+                    birthday=#{birthday},
+                </if>
+                <if test="personalSignature != null">
+                    personal_signature=#{personalSignature},
+                </if>
+                <if test="area != null">
+                    area=#{area},
+                </if>
+                <if test="areaCode != null">
+                    area_code=#{areaCode},
+                </if>
+            </set>
+        where user_id = #{userId}
+    </update>
+</mapper>
